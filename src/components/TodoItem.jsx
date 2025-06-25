@@ -4,6 +4,7 @@ import { Check, X, Edit3 } from 'lucide-react';
 const TodoItem = ({ todo, onToggle, onDelete, onEdit, animationDelay = 0 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState(todo.text);
+  const [error, setError] = useState('');
   const editInputRef = useRef(null);
 
   useEffect(() => {
@@ -16,21 +17,23 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit, animationDelay = 0 }) => {
   const handleEdit = () => {
     setIsEditing(true);
     setEditValue(todo.text);
+    setError('');
   };
 
   const handleSave = () => {
-    if (editValue.trim()) {
+    if (editValue.trim() && editValue.trim().length >= 3) {
       onEdit(todo.id, editValue);
       setIsEditing(false);
+      setError('');
     } else {
-      setEditValue(todo.text);
-      setIsEditing(false);
+      setError('Todo must be at least 3 characters long');
     }
   };
 
   const handleCancel = () => {
     setEditValue(todo.text);
     setIsEditing(false);
+    setError('');
   };
 
   const handleKeyPress = (e) => {
@@ -61,15 +64,24 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit, animationDelay = 0 }) => {
       {/* Todo Text */}
       <div className="flex-1 min-w-0">
         {isEditing ? (
-          <input
-            ref={editInputRef}
-            type="text"
-            value={editValue}
-            onChange={(e) => setEditValue(e.target.value)}
-            onBlur={handleSave}
-            onKeyDown={handleKeyPress}
-            className="w-full px-2 py-1 text-lg border border-blue-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+          <div>
+            <input
+              ref={editInputRef}
+              type="text"
+              value={editValue}
+              onChange={(e) => setEditValue(e.target.value)}
+              onBlur={handleSave}
+              onKeyDown={handleKeyPress}
+              className={`w-full px-2 py-1 text-lg border rounded focus:outline-none focus:ring-2 ${
+                error 
+                  ? 'border-red-300 focus:ring-red-200' 
+                  : 'border-blue-300 focus:ring-blue-200'
+              }`}
+            />
+            {error && (
+              <p className="text-red-500 text-sm mt-1">{error}</p>
+            )}
+          </div>
         ) : (
           <span
             className={`text-lg cursor-pointer select-none transition-all duration-200 ${
