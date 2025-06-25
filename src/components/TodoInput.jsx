@@ -15,7 +15,7 @@ const TodoInput = ({ onAddTodo }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("submit");
-    if (inputValue.trim() && inputValue.trim().length >= 3) {
+    if (inputValue.trim() && inputValue.trim().length >= 2) {
       console.log("add todo");
       onAddTodo(inputValue.trim());
       setInputValue('');
@@ -28,9 +28,9 @@ const TodoInput = ({ onAddTodo }) => {
       console.log("todo empty");
       setError('Please enter a todo item');
       e.preventDefault();
-    } else if (inputValue.trim().length < 3) {
+    } else if (inputValue.trim().length < 2) {
       console.log("todo too short");
-      setError('Todo must be at least 3 characters long');
+      setError('Todo must be at least 2 characters long');
       e.preventDefault();
     }
   };
@@ -41,7 +41,7 @@ const TodoInput = ({ onAddTodo }) => {
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        placeholder="What needs to be done? (min 3 characters)"
+        placeholder="What needs to be done? (min 2 characters)"
         className="todo-input pr-12"
         autoFocus
       />
