@@ -21,12 +21,12 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit, animationDelay = 0 }) => {
   };
 
   const handleSave = () => {
-    if (editValue.trim() && editValue.trim().length >= 3) {
+    if (editValue.trim() && editValue.trim().length >= 2) {
       onEdit(todo.id, editValue);
       setIsEditing(false);
       setError('');
     } else {
-      setError('Todo must be at least 3 characters long');
+      setError('Todo must be at least 2 characters long');
     }
   };
 
