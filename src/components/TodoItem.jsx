@@ -43,7 +43,7 @@ const TodoItem = ({ todo, onToggle, onDelete, onEdit, animationDelay = 0 }) => {
 
   return (
     <div 
-      className="todo-item animate-slide-in"
+      className="todo-item group animate-slide-in"
       style={{ animationDelay: `${animationDelay}ms` }}
     >
       {/* Checkbox */}

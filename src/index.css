@@ -17,7 +17,7 @@
   
   .todo-item {
     @apply flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm border 
-           border-gray-100 hover:shadow-md transition-all duration-200 group;
+           border-gray-100 hover:shadow-md transition-all duration-200;
   }
   
   .todo-checkbox {
