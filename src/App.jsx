@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Check, X, Edit3, Filter } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Check, Filter } from 'lucide-react';
 import TodoItem from './components/TodoItem';
 import TodoInput from './components/TodoInput';
 import FilterButtons from './components/FilterButtons';
 import Stats from './components/Stats';
+import { triggerConfetti } from './utils/confetti';
 
 const FILTERS = {
   ALL: 'all',
@@ -41,9 +42,17 @@ function App() {
   };
 
   const toggleTodo = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        const updatedTodo = { ...todo, completed: !todo.completed };
+        // Trigger confetti when marking a todo as complete (not when unchecking)
+        if (!todo.completed && updatedTodo.completed) {
+          triggerConfetti();
+        }
+        return updatedTodo;
+      }
+      return todo;
+    }));
   };
 
   const deleteTodo = (id) => {
